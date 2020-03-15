@@ -65,7 +65,7 @@ def cpp_flag(compiler):
 class BuildExt(build_ext):
     """A custom build extension for adding compiler-specific options."""
 
-    include_path = 'lambda-lanczos/include/lambda_lanczos'
+    include_path = 'external/lambda-lanczos/include/lambda_lanczos'
     c_opts = {
         'msvc': ['/EHsc', '/I', include_path],
         'unix': ['-I', include_path],
