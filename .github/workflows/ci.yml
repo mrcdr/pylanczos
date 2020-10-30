@@ -25,4 +25,4 @@ jobs:
         run: pip install .
 
       - name: Execute tests
-        run: python -m unittest test/pylanczos_test.py -v
+        run: python -m unittest discover test -v
