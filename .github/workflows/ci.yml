@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ develop, master ]
   pull_request:
     branches: [ develop ]
 
@@ -23,7 +23,7 @@ jobs:
 
       - name: Install library
         run: pip install .
-      
+
       - name: Install test dependencies
         run: pip install scipy coverage
 
