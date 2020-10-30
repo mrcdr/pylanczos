@@ -84,6 +84,14 @@ class PyLanczosTest(unittest.TestCase):
         correct_eigvec = np.exp(1j*phase)/np.linalg.norm(correct_eigvec)*correct_eigvec
         np.testing.assert_allclose(eigvec, correct_eigvec)
 
+    def test_unsupported_dtype(self):
+        matrix = np.array([[2, 1, 1],
+                           [1, 2, 1],
+                           [1, 1, 2]], dtype='int64')
+
+        with self.assertRaises(Exception):
+            PyLanczos(matrix, True)
+
 
 if __name__ == '__main__':
     unittest.main()
