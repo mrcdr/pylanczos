@@ -1,6 +1,6 @@
 language: python
 os: linux
-dist bionic # ("bionic"=ubuntu18.04)
+dist: bionic # ("bionic"=ubuntu18.04)
 
 install:
   - pip install .
