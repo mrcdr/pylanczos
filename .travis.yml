@@ -4,6 +4,7 @@ dist: bionic # ("bionic"=ubuntu18.04)
 
 install:
   - pip install .
+  - pip install scipy
 
 script:
   - python -m unittest discover test -v
