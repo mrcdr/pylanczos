@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install library
+        run: pip install .
+
+      - name: Execute tests
+        run: python -m unittest test/pylanczos_test.py -v
