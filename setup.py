@@ -23,7 +23,7 @@ class get_pybind_include(object):
 ext_modules = [
     Extension(
         'pylanczoscpp',
-        ['src/pylanczos.cpp'],
+        ['cpp/pylanczos.cpp'],
         include_dirs=[
             get_pybind_include(),
             get_pybind_include(user=True)
@@ -105,7 +105,7 @@ setup(
     description='',
     long_description='',
     ext_modules=ext_modules,
-    install_requires=['pybind11>=2.2'],
+    install_requires=['pybind11>=2.2', 'numpy'],
     setup_requires=['pybind11>=2.2'],
     cmdclass={'build_ext': BuildExt},
     packages=find_packages(),
