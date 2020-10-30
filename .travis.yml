@@ -1,0 +1,9 @@
+language: python
+os: linux
+dist bionic # ("bionic"=ubuntu18.04)
+
+install:
+  - pip install .
+
+script:
+  - python -m unittest test/pylanczos_test.py -v

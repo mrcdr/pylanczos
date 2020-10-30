@@ -29,7 +29,7 @@ class PyLanczosTest(unittest.TestCase):
         np.testing.assert_almost_equal(eigval, 4.0, decimal=3)
         sign = np.sign(eigvec[0])
         correct_eigvec = sign/np.sqrt(len(matrix))*np.array([1, 1, 1], dtype='float32')
-        np.testing.assert_allclose(eigvec, correct_eigvec, rtol=1e-4)
+        np.testing.assert_allclose(eigvec, correct_eigvec, rtol=1e-3)
 
     def test_sparse_matrix_numpy(self):
         n = 10
