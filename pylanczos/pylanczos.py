@@ -12,6 +12,36 @@ class PyLanczos():
                         np.dtype(np.complex256): PyLanczosCppComplexLongDouble}
 
     def __init__(self, matrix, find_maximum=False):
+        """Constructs Lanczos calculation engine.
+
+        Parameters
+        ----------
+        matrix : Any numpy or scipy matrix type
+            The symmetric (Hermitian) matrix to be diagonalized.
+            This matrix will never be changed.
+        find_maximum : bool
+            `True` to calculate the maximum eigenvalue,
+            `False` to calculate the minimum one.
+
+        Raises
+        ------
+        PyLanczosException
+            Unsupported `dtype` is specified.
+
+        Note
+        ----
+        Matrices which has the following attributes/methods are
+        actually acceptable:
+
+        - `dtype` attribute, which should be `numpy.dtype`
+        - `dot` method, which accepts `numpy.ndarray` and
+          returns the dot product (matrix-vector multiplication) result
+          as `numpy.ndarray`
+
+        `dtype` should be numpy `float32`, `float64`, `float128`, `complex64`,
+        `complex128`, or `complex256`.
+        """
+
         if matrix.dtype not in PyLanczos._dtype_to_suffix:
             raise PyLanczosException('Unsupported dtype: {}'.format(matrix.dtype))
 
@@ -19,6 +49,18 @@ class PyLanczos():
         self._find_maximum = find_maximum
 
     def run(self):
+        """Executes the Lanczos algorithm.
+
+        Returns
+        -------
+        float
+            Calculated eigenvalue
+        numpy.ndarray
+            Calculated eigenvector
+        int
+            Lanczos iteration count
+        """
+
         def mv_mul(v_in, v_out):
             result = self._matrix.dot(v_in)
             np.copyto(v_out, result)
