@@ -12,7 +12,7 @@ Currently PyLanczos is a beta version.
 The Lanczos algorithm itself is well tested, but the interface would be changed in future.
 
 ## Usage
-
+Samples are available [here](https://github.com/mrcdr/lambda-lanczos/blob/master/sample/).
 ``` python
 import numpy as np
 from pylanczos import PyLanczos
