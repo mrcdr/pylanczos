@@ -70,6 +70,25 @@ class PyLanczosTest(unittest.TestCase):
 
         np.testing.assert_allclose(eigvec, correct_eigvec)
 
+    def test_sparse_matrix_dynamic(self):
+        n = 10
+
+        def mv_mul(v_in, v_out):
+            for i in range(n-1):
+                v_out[i] += -1.0*v_in[i+1]
+                v_out[i+1] += -1.0*v_in[i]
+
+        engine = PyLanczos.create_custom(mv_mul, n, 'float64', False)
+        eigval, eigvec, itern = engine.run()
+
+        np.testing.assert_almost_equal(eigval, -2.0*np.cos(np.pi/(n+1)))
+        sign = np.sign(eigvec[0])
+
+        correct_eigvec = sign * np.sin((1+np.array(range(n)))*np.pi/(n+1))
+        correct_eigvec /= np.linalg.norm(correct_eigvec)
+
+        np.testing.assert_allclose(eigvec, correct_eigvec)
+
     def test_complex_matrix(self):
         matrix = np.array([[  0, 1j,  1],
                            [-1j,  0, 1j],
