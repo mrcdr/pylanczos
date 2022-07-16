@@ -26,11 +26,11 @@ class PyLanczos():
         Raises
         ------
         PyLanczosException
-            Unsupported `dtype` is specified.
+            If unsupported `dtype` is specified.
 
         Note
         ----
-        Matrices which has the following attributes/methods are
+        A matrix that has the following attributes/methods are
         actually acceptable:
 
         - `dtype` attribute, which should be `numpy.dtype`
@@ -38,7 +38,7 @@ class PyLanczos():
           returns the dot product (matrix-vector multiplication) result
           as `numpy.ndarray`
 
-        `dtype` should be numpy `float32`, `float64`, `float128`, `complex64`,
+        `dtype` must be one of the following numpy types: `float32`, `float64`, `float128`, `complex64`,
         `complex128`, or `complex256`.
         """
 
@@ -63,16 +63,16 @@ class PyLanczos():
 
         Parameters
         ----------
-        mv_mul : lambda(numpy.array, numpy.array)
+        mv_mul : lambda(numpy.ndarray, numpy.ndarray)
             The matrix-vector multiplication function, which should multiply
             a symmetric (Hermitian) matrix to an input array (the first
             parameter) and store the result into an output array (the second
-            parameter). Each arrays are passed as `numpy.array`.
+            parameter). Each arrays are passed as `numpy.ndarray`.
         n : int
             The dimension of the matrix, i.e. n for n by n matrix.
         dtype : numpy.dtype or str
-            The type of the matrix (acceptable type is described in a note of
-            `__init__` section).
+            The type of the matrix. This parameter must be one of the following: `float32`, `float64`, `float128`,
+            `complex64`, `complex128`, or `complex256`.
         find_maximum : bool
             `True` to calculate the maximum eigenvalue,
             `False` to calculate the minimum one.
@@ -80,13 +80,14 @@ class PyLanczos():
         Raises
         ------
         PyLanczosException
-            Unsupported `dtype` is specified.
+            If unnsupported `dtype` is specified.
 
         Note
         ----
-        Since the matrix-vector multiplication function usually spends
-        the most part of the Lanczos calculation time, the function should be
-        optimized enough.
+        Since the matrix-vector multiplication usually spends
+        the most part of the Lanczos calculation time, `mv_mul` should be well optimized.
+        It is commonly good to define `mv_mul` with binary-level optimized functions,
+        such as `numpy.dot`, `numpy.einsum`, etc.
         """
 
         dummy_matrix = np.array([], dtype=dtype)
