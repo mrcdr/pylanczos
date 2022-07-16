@@ -9,6 +9,7 @@ class PyLanczosTest(unittest.TestCase):
         matrix = np.array([[2, 1, 1],
                            [1, 2, 1],
                            [1, 1, 2]], dtype='float64')
+        n = len(matrix)
 
         engine = PyLanczos(matrix, True)
         eigval, eigvec = engine.run()
@@ -17,6 +18,7 @@ class PyLanczosTest(unittest.TestCase):
         sign = np.sign(eigvec[0])
         correct_eigvec = sign/np.sqrt(len(matrix))*np.array([1, 1, 1])
         np.testing.assert_allclose(eigvec, correct_eigvec)
+        self.assertTrue(1 <= engine.iteration_count and engine.iteration_count <= n)
 
     def test_simple_matrix_single_float(self):
         matrix = np.array([[2, 1, 1],
