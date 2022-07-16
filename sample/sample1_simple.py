@@ -8,10 +8,9 @@ def exec_sample():
                        [1.0, 1.0, 2.0]])
 
     engine = PyLanczos(matrix, True)  # True to calculate the maximum eigenvalue.
-    eigval, eigvec, itern = engine.run()
+    eigval, eigvec = engine.run()
     print("Eigenvalue: {}".format(eigval))
     print("Eigenvector: {}".format(eigvec))
-    print("Iteration count: {}".format(itern))
 
 
 if __name__ == "__main__":

@@ -24,10 +24,9 @@ def exec_sample():
     # So k = 1 is the largest one and k = n is the smallest one.
 
     engine = PyLanczos(csr_matrix(matrix), True)  # True to calculate the largest eigenvalue.
-    eigval, eigvec, itern = engine.run()
+    eigval, eigvec = engine.run()
     print("Eigenvalue: {}".format(eigval))
     print("Eigenvector: {}".format(eigvec))
-    print("Iteration count: {}".format(itern))
 
 
 if __name__ == "__main__":

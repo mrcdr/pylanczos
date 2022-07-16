@@ -48,6 +48,7 @@ class PyLanczos():
         self._dtype = matrix.dtype
         self._n = matrix.shape[0]
         self._find_maximum = find_maximum
+        self._iteration_count = 0
 
         def mv_mul(v_in, v_out):
             result = matrix.dot(v_in)
@@ -106,11 +107,17 @@ class PyLanczos():
             Calculated eigenvalue
         numpy.ndarray
             Calculated eigenvector
-        int
-            Lanczos iteration count
         """
 
         klass = PyLanczos._dtype_to_suffix[self._dtype]
         engine = klass(self._mv_mul, self._n, self._find_maximum)
 
-        return engine.run()
+        eigen_value, eigen_vector, iteration_count = engine.run()
+
+        self._iteration_count = iteration_count
+
+        return eigen_value, eigen_vector
+
+    @property
+    def iteration_count(self):
+        return self._iteration_count

@@ -11,7 +11,7 @@ class PyLanczosTest(unittest.TestCase):
                            [1, 1, 2]], dtype='float64')
 
         engine = PyLanczos(matrix, True)
-        eigval, eigvec, itern = engine.run()
+        eigval, eigvec = engine.run()
 
         np.testing.assert_almost_equal(eigval, 4.0)
         sign = np.sign(eigvec[0])
@@ -24,7 +24,7 @@ class PyLanczosTest(unittest.TestCase):
                            [1, 1, 2]], dtype='float32')
 
         engine = PyLanczos(matrix, True)
-        eigval, eigvec, itern = engine.run()
+        eigval, eigvec = engine.run()
 
         np.testing.assert_almost_equal(eigval, 4.0, decimal=3)
         sign = np.sign(eigvec[0])
@@ -40,7 +40,7 @@ class PyLanczosTest(unittest.TestCase):
             matrix[i+1, i] = -1
 
         engine = PyLanczos(matrix, False)
-        eigval, eigvec, itern = engine.run()
+        eigval, eigvec = engine.run()
 
         np.testing.assert_almost_equal(eigval, -2.0*np.cos(np.pi/(n+1)))
         sign = np.sign(eigvec[0])
@@ -60,7 +60,7 @@ class PyLanczosTest(unittest.TestCase):
             matrix[(i+1, i)] = -1
 
         engine = PyLanczos(csr_matrix(matrix), False)
-        eigval, eigvec, itern = engine.run()
+        eigval, eigvec = engine.run()
 
         np.testing.assert_almost_equal(eigval, -2.0*np.cos(np.pi/(n+1)))
         sign = np.sign(eigvec[0])
@@ -79,7 +79,7 @@ class PyLanczosTest(unittest.TestCase):
                 v_out[i+1] += -1.0*v_in[i]
 
         engine = PyLanczos.create_custom(mv_mul, n, 'float64', False)
-        eigval, eigvec, itern = engine.run()
+        eigval, eigvec = engine.run()
 
         np.testing.assert_almost_equal(eigval, -2.0*np.cos(np.pi/(n+1)))
         sign = np.sign(eigvec[0])
@@ -95,7 +95,7 @@ class PyLanczosTest(unittest.TestCase):
                            [  1, -1j, 0]], dtype='complex128')
 
         engine = PyLanczos(matrix, False)
-        eigval, eigvec, itern = engine.run()
+        eigval, eigvec = engine.run()
 
         np.testing.assert_almost_equal(eigval, -2.0)
         phase = np.angle(eigvec[0])
