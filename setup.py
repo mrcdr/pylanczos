@@ -26,7 +26,8 @@ ext_modules = [
         ['cpp/pylanczos.cpp'],
         include_dirs=[
             get_pybind_include(),
-            get_pybind_include(user=True)
+            get_pybind_include(user=True),
+            "include/"
         ],
         language='c++'
     ),
