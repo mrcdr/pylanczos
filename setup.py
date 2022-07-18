@@ -23,7 +23,7 @@ class get_pybind_include(object):
 ext_modules = [
     Extension(
         'pylanczoscpp',
-        ['cpp/pylanczos.cpp', 'cpp/pylanczos.hpp'],
+        ['cpp/pylanczos.cpp'],
         include_dirs=[
             get_pybind_include(),
             get_pybind_include(user=True)
