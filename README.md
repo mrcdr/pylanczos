@@ -28,9 +28,12 @@ print("Eigenvector: {}".format(eigvec))
 
 
 ## Installation
-1. Clone or download the latest version from [Github](https://github.com/mrcdr/pylanczos/).
-1. In the cloned directory, run `pip install .`
 
+`pip install pylanczos`
+
+## Requirements
+
+C++11 compatible environment
 
 ## License
 
