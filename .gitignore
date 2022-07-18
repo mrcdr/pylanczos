@@ -1,5 +1,8 @@
 *~
 *.so
 build/
+/dist/
+/tmp/
+*.egg-info/
 __pycache__
 /external/pybind11

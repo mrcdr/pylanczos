@@ -3,7 +3,7 @@ from setuptools.command.build_ext import build_ext
 import sys
 import setuptools
 
-__version__ = '0.1'
+__version__ = '1.0.0'
 
 
 class get_pybind_include(object):
@@ -23,7 +23,7 @@ class get_pybind_include(object):
 ext_modules = [
     Extension(
         'pylanczoscpp',
-        ['cpp/pylanczos.cpp'],
+        ['cpp/pylanczos.cpp', 'cpp/pylanczos.hpp'],
         include_dirs=[
             get_pybind_include(),
             get_pybind_include(user=True)
@@ -96,14 +96,21 @@ class BuildExt(build_ext):
             ext.extra_link_args = link_opts
         build_ext.build_extensions(self)
 
+try:
+    with open('README.md') as f:
+        readme = f.read()
+except IOError:
+    readme = ''
+
 setup(
     name='pylanczos',
     version=__version__,
-    author='',
-    author_email='',
-    url='',
-    description='',
-    long_description='',
+    author='mrcdr',
+    url='https://github.com/mrcdr/pylanczos',
+    description='Lanczos diagonalization library: Python interface with C++ implementation',
+    long_description_content_type='text/markdown',
+    long_description=readme,
+    license='MIT',
     ext_modules=ext_modules,
     install_requires=['pybind11>=2.2', 'numpy'],
     setup_requires=['pybind11>=2.2'],

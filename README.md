@@ -5,11 +5,8 @@
 
 # PyLanczos
 ## Overview
-**PyLanczos** is a wrapper library of [LambdaLanczos](https://github.com/mrcdr/lambda-lanczos),
-which is written in C++.
-
-Currently PyLanczos is a beta version.
-The Lanczos algorithm itself is well tested, but the interface would be changed in future.
+**PyLanczos** is a Lanczos diagonalization library.
+Its core part is written in C++ as [LambdaLanczos](https://github.com/mrcdr/lambda-lanczos).
 
 ## Usage
 Samples are available [here](https://github.com/mrcdr/pylanczos/tree/master/sample).
