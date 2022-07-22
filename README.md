@@ -9,12 +9,10 @@
 Its core part is written in C++ as [LambdaLanczos](https://github.com/mrcdr/lambda-lanczos).
 
 ## Usage
-Samples are available [here](https://github.com/mrcdr/pylanczos/tree/master/sample).
+All samples are available [here](https://github.com/mrcdr/pylanczos/tree/master/sample).
+
+### NumPy and SciPy matrix
 ``` python
-import numpy as np
-from pylanczos import PyLanczos
-
-
 matrix = np.array([[2.0, 1.0, 1.0],
                    [1.0, 2.0, 1.0],
                    [1.0, 1.0, 2.0]])
@@ -25,11 +23,35 @@ eigval, eigvec = engine.run()
 print("Eigenvalue: {}".format(eigval))
 print("Eigenvector: {}".format(eigvec))
 ```
+Note: Use of SciPy sparse matrix is preffered to take full advantage of Lanczos algorithm.
 
+### Customized operation
+You can also attach your customized function:
+```python
+tensor = np.zeros((2, 2, 2, 2), dtype='float64')
+tensor[0, 0, 0, 0] = 1
+# and so on...
+
+## Matrix-vector (or tensor-matrix) multiplication function
+def mv_mul(v_in, v_out):
+    v_in.shape = (2, 2)
+    v_out.shape = (2, 2)
+
+    np.einsum("ijkl, kl -> ij", tensor, v_in, out=v_out, optimize="optimal")
+
+## Calculate an "eigenmatrix" for the 4th-order tensor.
+engine = PyLanczos.create_custom(mv_mul, 4, 'float64')
+eigval, eigmat = engine.run()
+eigmat.shape = (2, 2)
+print("Eigenvalue: {}".format(eigval))
+print("Eigenmatrix: {}".format(eigmat))
+```
+There is [a full sample](https://github.com/mrcdr/pylanczos/tree/master/sample/sample3_custom.py) with detailed description.
 
 ## Installation
-
-`pip install pylanczos`
+```sh
+pip install pylanczos
+```
 
 ## Requirements
 
@@ -42,3 +64,7 @@ C++11 compatible environment
 ## Author
 
 [mrcdr](https://github.com/mrcdr)
+
+## PyPI repository
+
+[pylanczos](https://pypi.org/project/pylanczos/)
