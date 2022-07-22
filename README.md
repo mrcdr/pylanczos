@@ -23,7 +23,7 @@ eigval, eigvec = engine.run()
 print("Eigenvalue: {}".format(eigval))
 print("Eigenvector: {}".format(eigvec))
 ```
-Note: Use of SciPy sparse matrix is preffered to take full advantage of Lanczos algorithm.
+Note: Use of SciPy sparse matrix is recommended to take full advantage of Lanczos algorithm.
 
 ### Customized operation
 You can also attach your customized function:
