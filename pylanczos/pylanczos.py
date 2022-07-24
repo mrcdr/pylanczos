@@ -26,7 +26,7 @@ class PyLanczos():
 
         return dict
 
-    _dtype_to_suffix = _create_suffix_dict()
+    _dtype_to_suffix = PyLanczos._create_suffix_dict()
 
     def __init__(self, matrix, find_maximum=False):
         """Constructs Lanczos calculation engine.
