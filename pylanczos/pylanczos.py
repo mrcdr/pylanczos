@@ -4,12 +4,29 @@ from .pylanczos_exception import PyLanczosException
 
 
 class PyLanczos():
-    _dtype_to_suffix = {np.dtype(np.float32): PyLanczosCppFloat,
-                        np.dtype(np.float64): PyLanczosCppDouble,
-                        np.dtype(np.float128): PyLanczosCppLongDouble,
-                        np.dtype(np.complex64): PyLanczosCppComplexFloat,
-                        np.dtype(np.complex128): PyLanczosCppComplexDouble,
-                        np.dtype(np.complex256): PyLanczosCppComplexLongDouble}
+    @staticmethod
+    def _create_suffix_dict():
+        dict = {}
+        pairs = [
+            ("float32", PyLanczosCppFloat),
+            ("float64", PyLanczosCppDouble),
+            ("float128", PyLanczosCppLongDouble),
+            ("complex64", PyLanczosCppComplexFloat),
+            ("complex128", PyLanczosCppComplexDouble),
+            ("complex256", PyLanczosCppComplexLongDouble)
+        ]
+
+        # Since some environments do not support float128 (i.e. long double),
+        # such types should be removed from the dict.
+        for (keystr, val) in pairs:
+            try:
+                dict[np.dtype(keystr)] = val
+            except TypeError:
+                pass
+
+        return dict
+
+    _dtype_to_suffix = _create_suffix_dict()
 
     def __init__(self, matrix, find_maximum=False):
         """Constructs Lanczos calculation engine.
