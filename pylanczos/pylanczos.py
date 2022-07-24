@@ -3,30 +3,30 @@ from pylanczoscpp import *
 from .pylanczos_exception import PyLanczosException
 
 
+def create_suffix_dict():
+    dict = {}
+    pairs = [
+        ("float32", PyLanczosCppFloat),
+        ("float64", PyLanczosCppDouble),
+        ("float128", PyLanczosCppLongDouble),
+        ("complex64", PyLanczosCppComplexFloat),
+        ("complex128", PyLanczosCppComplexDouble),
+        ("complex256", PyLanczosCppComplexLongDouble)
+    ]
+
+    # Since some environments do not support float128 (i.e. long double),
+    # such types should be removed from the dict.
+    for (keystr, val) in pairs:
+        try:
+            dict[np.dtype(keystr)] = val
+        except TypeError:
+            pass
+
+    return dict
+
+
 class PyLanczos():
-    @staticmethod
-    def _create_suffix_dict():
-        dict = {}
-        pairs = [
-            ("float32", PyLanczosCppFloat),
-            ("float64", PyLanczosCppDouble),
-            ("float128", PyLanczosCppLongDouble),
-            ("complex64", PyLanczosCppComplexFloat),
-            ("complex128", PyLanczosCppComplexDouble),
-            ("complex256", PyLanczosCppComplexLongDouble)
-        ]
-
-        # Since some environments do not support float128 (i.e. long double),
-        # such types should be removed from the dict.
-        for (keystr, val) in pairs:
-            try:
-                dict[np.dtype(keystr)] = val
-            except TypeError:
-                pass
-
-        return dict
-
-    _dtype_to_suffix = PyLanczos._create_suffix_dict()
+    _dtype_to_suffix = create_suffix_dict()
 
     def __init__(self, matrix, find_maximum=False):
         """Constructs Lanczos calculation engine.
