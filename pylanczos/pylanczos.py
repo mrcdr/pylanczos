@@ -6,21 +6,16 @@ from .pylanczos_exception import PyLanczosException
 def create_suffix_dict():
     dict = {}
     pairs = [
-        ("float32", PyLanczosCppFloat),
-        ("float64", PyLanczosCppDouble),
-        ("float128", PyLanczosCppLongDouble),
-        ("complex64", PyLanczosCppComplexFloat),
-        ("complex128", PyLanczosCppComplexDouble),
-        ("complex256", PyLanczosCppComplexLongDouble)
+        ("single", PyLanczosCppFloat),
+        ("double", PyLanczosCppDouble),
+        ("longdouble", PyLanczosCppLongDouble),
+        ("csingle", PyLanczosCppComplexFloat),
+        ("cdouble", PyLanczosCppComplexDouble),
+        ("clongdouble", PyLanczosCppComplexLongDouble)
     ]
 
-    # Since some environments do not support float128 (i.e. long double),
-    # such types should be removed from the dict.
     for (keystr, val) in pairs:
-        try:
-            dict[np.dtype(keystr)] = val
-        except TypeError:
-            pass
+        dict[np.dtype(keystr)] = val
 
     return dict
 
@@ -55,8 +50,8 @@ class PyLanczos():
           returns the dot product (matrix-vector multiplication) result
           as `numpy.ndarray`
 
-        `dtype` must be one of the following numpy types: `float32`, `float64`, `float128`, `complex64`,
-        `complex128`, or `complex256`.
+        Following `dtype` (and their equivalents) are acceptable: `single`, `double`, `longdouble`, `csingle`,
+        `cdouble`, and `clongdouble`.
         """
 
         if matrix.dtype not in PyLanczos._dtype_to_suffix:
@@ -89,8 +84,8 @@ class PyLanczos():
         n : int
             The dimension of the matrix, i.e. n for n by n matrix.
         dtype : numpy.dtype or str
-            The type of the matrix. This parameter must be one of the following: `float32`, `float64`, `float128`,
-            `complex64`, `complex128`, or `complex256`.
+            The type of the matrix. Following `dtype` (and their equivalents) are acceptable:
+            `single`, `double`, `longdouble`, `csingle`, `cdouble`, or `clongdouble`.
         find_maximum : bool
             `True` to calculate the maximum eigenvalue,
             `False` to calculate the minimum one.
