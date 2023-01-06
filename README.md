@@ -14,8 +14,8 @@ All samples are available [here](https://github.com/mrcdr/pylanczos/tree/master/
 ### NumPy and SciPy matrix
 ``` python
 matrix = np.array([[2.0, 1.0, 1.0],
-                       [1.0, 2.0, 1.0],
-                       [1.0, 1.0, 2.0]])
+                   [1.0, 2.0, 1.0],
+                   [1.0, 1.0, 2.0]])
 
 engine = PyLanczos(matrix, True, 2)  # Find 2 maximum eigenpairs
 eigenvalues, eigenvectors = engine.run()
