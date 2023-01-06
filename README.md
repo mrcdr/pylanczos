@@ -14,14 +14,14 @@ All samples are available [here](https://github.com/mrcdr/pylanczos/tree/master/
 ### NumPy and SciPy matrix
 ``` python
 matrix = np.array([[2.0, 1.0, 1.0],
-                   [1.0, 2.0, 1.0],
-                   [1.0, 1.0, 2.0]])
+                       [1.0, 2.0, 1.0],
+                       [1.0, 1.0, 2.0]])
 
-engine = PyLanczos(matrix, True)  # True to calculate the maximum eigenvalue.
-eigval, eigvec = engine.run()
-
-print("Eigenvalue: {}".format(eigval))
-print("Eigenvector: {}".format(eigvec))
+engine = PyLanczos(matrix, True, 2)  # Find 2 maximum eigenpairs
+eigenvalues, eigenvectors = engine.run()
+print("Eigenvalue: {}".format(eigenvalues))
+print("Eigenvector:")
+print(eigenvectors)
 ```
 Note: Use of SciPy sparse matrix is recommended to take full advantage of Lanczos algorithm.
 
@@ -40,11 +40,12 @@ def mv_mul(v_in, v_out):
     np.einsum("ijkl, kl -> ij", tensor, v_in, out=v_out, optimize="optimal")
 
 ## Calculate an "eigenmatrix" for the 4th-order tensor.
-engine = PyLanczos.create_custom(mv_mul, 4, 'float64')
-eigval, eigmat = engine.run()
-eigmat.shape = (2, 2)
-print("Eigenvalue: {}".format(eigval))
-print("Eigenmatrix: {}".format(eigmat))
+engine = PyLanczos.create_custom(mv_mul, n, 'float64', False, 1) # Find 1 minimum eigenpair
+eigenvalues, eigenmatrices = engine.run()
+eigenmatrices.shape = (2, 2)
+print("Eigenvalue: {}".format(eigenvalues))
+print("Eigenmatrix:")
+print(eigenmatrices)
 ```
 There is [a full sample](https://github.com/mrcdr/pylanczos/tree/master/sample/sample3_custom.py) with detailed description.
 
