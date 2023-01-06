@@ -24,7 +24,7 @@ def exec_sample():
 
     ## Matrix-vector (or tensor-matrix) multiplication function.
     ## Note the followings:
-    ## (1) Don't use reshape() for the input/output vectors. 
+    ## (1) Don't use reshape() for the input/output vectors.
     ##     reshape() may duplicate elements rather than simply create a view of the original vector.
     ##     v.shape=... can prevent such implicit copying (it raises an error when copying is inevitable).
     ## (2) Use the "out" keyword argument of np.einsum to store the result directly into v_out.
@@ -36,11 +36,12 @@ def exec_sample():
         np.einsum("ijkl, kl -> ij", tensor, v_in, out=v_out, optimize="optimal")
 
     ## Calculate an "eigenmatrix" for the 4th-order tensor.
-    engine = PyLanczos.create_custom(mv_mul, n, 'float64')
-    eigval, eigmat = engine.run()
-    eigmat.shape = (2, 2)
-    print("Eigenvalue: {}".format(eigval))
-    print("Eigenmatrix: {}".format(eigmat))
+    engine = PyLanczos.create_custom(mv_mul, n, 'float64', False, 1) # Find 1 minimum eigenpair
+    eigenvalues, eigenmatrices = engine.run()
+    eigenmatrices.shape = (2, 2)
+    print("Eigenvalue: {}".format(eigenvalues))
+    print("Eigenmatrix:")
+    print(eigenmatrices)
 
 
 if __name__ == "__main__":

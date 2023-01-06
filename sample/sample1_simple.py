@@ -7,10 +7,11 @@ def exec_sample():
                        [1.0, 2.0, 1.0],
                        [1.0, 1.0, 2.0]])
 
-    engine = PyLanczos(matrix, True)  # True to calculate the maximum eigenvalue.
-    eigval, eigvec = engine.run()
-    print("Eigenvalue: {}".format(eigval))
-    print("Eigenvector: {}".format(eigvec))
+    engine = PyLanczos(matrix, True, 2)  # Find 2 maximum eigenpairs
+    eigenvalues, eigenvectors = engine.run()
+    print("Eigenvalue: {}".format(eigenvalues))
+    print("Eigenvector:")
+    print(eigenvectors)
 
 
 if __name__ == "__main__":

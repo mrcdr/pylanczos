@@ -23,10 +23,11 @@ def exec_sample():
     # Its eigenvalues are 2*cos(k*pi/(n+1)), where k = 1, 2, ... , n.
     # So k = 1 is the largest one and k = n is the smallest one.
 
-    engine = PyLanczos(csr_matrix(matrix), True)  # True to calculate the largest eigenvalue.
-    eigval, eigvec = engine.run()
-    print("Eigenvalue: {}".format(eigval))
-    print("Eigenvector: {}".format(eigvec))
+    engine = PyLanczos(csr_matrix(matrix), True, 1) # Find 1 maximum eigenpair
+    eigenvalues, eigenvectors = engine.run()
+    print("Eigenvalue: {}".format(eigenvalues))
+    print("Eigenvector:")
+    print(eigenvectors)
 
 
 if __name__ == "__main__":
