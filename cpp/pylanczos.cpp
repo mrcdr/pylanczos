@@ -19,7 +19,7 @@ void declare_template(pybind11::module &m, const std::string& suffix) {
     .def_readwrite("matrix_size", &PyLanczosCpp<T>::matrix_size)
     .def_readwrite("find_maximum", &PyLanczosCpp<T>::find_maximum)
     .def_readwrite("eigenvalue_offset", &PyLanczosCpp<T>::eigenvalue_offset)
-    .def(pybind11::init<std::function<void (pybind11::array_t<T>, pybind11::array_t<T>)>, size_t, bool>())
+    .def(pybind11::init<std::function<void (pybind11::array_t<T>, pybind11::array_t<T>)>, size_t, bool, size_t>())
     .def("run", &PyLanczosCpp<T>::run);
 }
 

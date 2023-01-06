@@ -23,7 +23,7 @@ def create_suffix_dict():
 class PyLanczos():
     _dtype_to_suffix = create_suffix_dict()
 
-    def __init__(self, matrix, find_maximum=False):
+    def __init__(self, matrix, find_maximum, num_eigs):
         """Constructs Lanczos calculation engine.
 
         Parameters
@@ -34,6 +34,8 @@ class PyLanczos():
         find_maximum : bool
             `True` to calculate the maximum eigenvalue,
             `False` to calculate the minimum one.
+        num_eigs : int
+            Number of eigenpairs to be calculated.
 
         Raises
         ------
@@ -60,7 +62,8 @@ class PyLanczos():
         self._dtype = matrix.dtype
         self._n = matrix.shape[0]
         self._find_maximum = find_maximum
-        self._iteration_count = 0
+        self._num_eigs = num_eigs
+        self._iteration_counts = []
 
         def mv_mul(v_in, v_out):
             result = matrix.dot(v_in)
@@ -70,7 +73,7 @@ class PyLanczos():
         self._mv_mul = mv_mul
 
     @staticmethod
-    def create_custom(mv_mul, n, dtype, find_maximum=False):
+    def create_custom(mv_mul, n, dtype, find_maximum, num_eigs):
         """Constructs Lanczos calculation engine
         with a custom matrix-vector multiplication function.
 
@@ -89,11 +92,13 @@ class PyLanczos():
         find_maximum : bool
             `True` to calculate the maximum eigenvalue,
             `False` to calculate the minimum one.
+        num_eigs : int
+            Number of eigenpairs to be calculated.
 
         Raises
         ------
         PyLanczosException
-            If unnsupported `dtype` is specified.
+            If unsupported `dtype` is specified.
 
         Note
         ----
@@ -104,7 +109,7 @@ class PyLanczos():
         """
 
         dummy_matrix = np.array([], dtype=dtype)
-        pylanczos_obj = PyLanczos(dummy_matrix, find_maximum)
+        pylanczos_obj = PyLanczos(dummy_matrix, find_maximum, num_eigs)
         pylanczos_obj._n = n
         pylanczos_obj._mv_mul = mv_mul
 
@@ -115,21 +120,21 @@ class PyLanczos():
 
         Returns
         -------
-        float
-            Calculated eigenvalue
         numpy.ndarray
-            Calculated eigenvector
+            Calculated eigenvalues
+        numpy.ndarray
+            Calculated eigenvectors
         """
 
         klass = PyLanczos._dtype_to_suffix[self._dtype]
-        engine = klass(self._mv_mul, self._n, self._find_maximum)
+        engine = klass(self._mv_mul, self._n, self._find_maximum, self._num_eigs)
 
-        eigen_value, eigen_vector, iteration_count = engine.run()
+        eigenvalues, eigenvectors, iteration_counts = engine.run()
 
-        self._iteration_count = iteration_count
+        self._iteration_counts = iteration_counts
 
-        return eigen_value, eigen_vector
+        return eigenvalues, eigenvectors
 
     @property
-    def iteration_count(self):
-        return self._iteration_count
+    def iteration_counts(self):
+        return self._iteration_counts
