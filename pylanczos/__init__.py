@@ -1,1 +1,1 @@
-from .pylanczos import PyLanczos
+from .pylanczos import PyLanczos, Exponentiator

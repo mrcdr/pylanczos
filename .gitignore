@@ -7,3 +7,5 @@ build/
 __pycache__
 /external/pybind11
 /.vscode/
+.eggs/
+/venv/
