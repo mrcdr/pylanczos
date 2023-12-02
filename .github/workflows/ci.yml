@@ -39,7 +39,7 @@ jobs:
         run: .\venv\Scripts\activate.ps1
 
       - name: Install library
-        run: pip install .
+        run: pip install . --verbose
 
       - name: Install test dependencies
         run: pip install scipy coverage
