@@ -29,7 +29,14 @@ jobs:
         run: |
           pip install --upgrade pip
           python -m venv venv
-          source ./venv/bin/activate
+
+      - name: Activate venv (Linux)
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: source ./venv/bin/activate
+
+      - name: Activate venv (Windows)
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: .\venv\Scripts\activate.ps1
 
       - name: Install library
         run: pip install .
