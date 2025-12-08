@@ -44,18 +44,16 @@ jobs:
       - name: Install test dependencies
         run: pip install scipy coverage
 
-      - name: Execute tests
+      - name: Execute tests and generate code coverage data
         run: |
           cd test
           coverage run --source ../pylanczos/ -m unittest discover ./ -v
-
-      - name: Generate code coverage data
-        run: coverage xml
+          coverage xml
 
       - name: Upload coverage data to Codecov
         if: ${{ matrix.os == 'ubuntu-latest' }}
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.xml
+          file: ./test/coverage.xml
           fail_ci_if_error: true
