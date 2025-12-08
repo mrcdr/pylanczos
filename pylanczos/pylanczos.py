@@ -1,6 +1,6 @@
 import numpy as np
-from pylanczoscpp import *
-from .pylanczos_exception import PyLanczosException
+from pylanczos.pylanczoscpp import *
+from pylanczos.pylanczos_exception import PyLanczosException
 
 
 def create_suffix_dict(pairs):

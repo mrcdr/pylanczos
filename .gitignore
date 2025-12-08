@@ -5,7 +5,9 @@ build/
 /tmp/
 *.egg-info/
 __pycache__
-/external/pybind11
 /.vscode/
 .eggs/
 /venv/
+
+.coverage
+coverage.xml

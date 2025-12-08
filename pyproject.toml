@@ -1,0 +1,18 @@
+[project]
+name = "pylanczos"
+version = "2.1.2"
+authors = [{ name = "mrcdr" }]
+license = "MIT"
+description = "Lanczos diagonalization library: Python interface with C++ implementation"
+readme = "README.md"
+keywords = ["Lanczos", "diagonalization", "C++", "Python"]
+dependencies = ["numpy"]
+
+[project.urls]
+Homepage = "https://github.com/mrcdr/pylanczos"
+Source = "https://github.com/mrcdr/pylanczos"
+Issues = "https://github.com/mrcdr/pylanczos/issues"
+
+[build-system]
+requires = ["scikit-build-core", "pybind11"]
+build-backend = "scikit_build_core.build"

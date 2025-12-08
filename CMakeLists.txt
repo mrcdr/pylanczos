@@ -1,10 +1,13 @@
-cmake_minimum_required(VERSION 3.11)
-project (pylanczos CXX)
+cmake_minimum_required(VERSION 3.15)
 
-include_directories("./src")
+project(
+  ${SKBUILD_PROJECT_NAME}
+  VERSION ${SKBUILD_PROJECT_VERSION}
+  LANGUAGES CXX)
+
+include_directories("./include")
 include_directories("./external/lambda-lanczos/include/lambda_lanczos")
 
-## Pybind configuration
 add_subdirectory("external/pybind11")
-file(GLOB pybind_src "cpp/*.cpp")
-pybind11_add_module(pylanczoscpp ${pybind_src})
+pybind11_add_module(pylanczoscpp MODULE "cpp/pylanczos.cpp" WITH_SOABI)
+install(TARGETS pylanczoscpp DESTINATION "${SKBUILD_PROJECT_NAME}")

@@ -1,3 +1,7 @@
 [submodule "lambda-lanczos"]
 	path = external/lambda-lanczos
 	url = https://github.com/mrcdr/lambda-lanczos.git
+[submodule "external/pybind11"]
+	path = external/pybind11
+	url = https://github.com/pybind/pybind11
+	branch = stable
