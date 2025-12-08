@@ -45,7 +45,9 @@ jobs:
         run: pip install scipy coverage
 
       - name: Execute tests
-        run: coverage run --source pylanczos/ -m unittest discover test/ -v
+        run: |
+          cd test
+          coverage run --source ../pylanczos/ -m unittest discover ./ -v
 
       - name: Generate code coverage data
         run: coverage xml
