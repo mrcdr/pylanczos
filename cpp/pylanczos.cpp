@@ -20,7 +20,12 @@ void declare_template_lanczos(pybind11::module& m, const std::string& suffix) {
       .def_readwrite("find_maximum", &PyLanczosCpp<T>::find_maximum)
       .def_readwrite("eigenvalue_offset", &PyLanczosCpp<T>::eigenvalue_offset)
       .def(pybind11::init<std::function<void(pybind11::array_t<T>, pybind11::array_t<T>)>, size_t, bool, size_t>())
-      .def("run", &PyLanczosCpp<T>::run);
+      .def("run",
+           static_cast<std::tuple<pybind11::array_t<T>, pybind11::array_t<T>, std::vector<size_t>> (PyLanczosCpp<T>::*)(
+               void)>(&PyLanczosCpp<T>::run))
+      .def("run",
+           static_cast<std::tuple<pybind11::array_t<T>, pybind11::array_t<T>, std::vector<size_t>> (PyLanczosCpp<T>::*)(
+               const std::vector<T>&)>(&PyLanczosCpp<T>::run));
 }
 
 template <typename T>

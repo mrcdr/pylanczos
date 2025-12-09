@@ -116,8 +116,13 @@ class PyLanczos:
 
         return pylanczos_obj
 
-    def run(self):
+    def run(self, initial_vector=None):
         """Executes the Lanczos algorithm.
+        Parameters
+        ----------
+        initial_vector : numpy.ndarray, optional
+            Initial vector to start the Lanczos iteration.
+            If not specified, a random vector will be used.
 
         Returns
         -------
@@ -130,7 +135,10 @@ class PyLanczos:
         klass = PyLanczos._dtype_to_suffix[self._dtype]
         engine = klass(self._mv_mul, self._n, self._find_maximum, self._num_eigs)
 
-        eigenvalues, eigenvectors, iteration_counts = engine.run()
+        if initial_vector is not None:
+            eigenvalues, eigenvectors, iteration_counts = engine.run(initial_vector)
+        else:
+            eigenvalues, eigenvectors, iteration_counts = engine.run()
 
         self._iteration_counts = iteration_counts
 

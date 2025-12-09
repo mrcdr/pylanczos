@@ -30,6 +30,21 @@ class PyLanczosCpp : public lambda_lanczos::LambdaLanczos<T> {
 
   // This tuple will be interpreted as multiple-value return (python tuple) in Python.
   std::tuple<pybind11::array_t<T>, pybind11::array_t<T>, std::vector<size_t>> run() {
+    this->lambda_lanczos::LambdaLanczos<T>::init_vector = lambda_lanczos::VectorRandomInitializer<T>::init;
+
+    return this->run_impl();
+  };
+
+  std::tuple<pybind11::array_t<T>, pybind11::array_t<T>, std::vector<size_t>> run(const std::vector<T>& initial_vec) {
+    this->lambda_lanczos::LambdaLanczos<T>::init_vector = [&initial_vec](std::vector<T>& out_vec) {
+      std::copy(initial_vec.begin(), initial_vec.end(), out_vec.begin());
+    };
+
+    return this->run_impl();
+  };
+
+ private:
+  std::tuple<pybind11::array_t<T>, pybind11::array_t<T>, std::vector<size_t>> run_impl() {
     using RT = lambda_lanczos::util::real_t<T>;
     std::vector<RT> eigenvalues;
     std::vector<std::vector<T>> eigenvectors;
