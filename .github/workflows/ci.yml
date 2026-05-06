@@ -24,10 +24,8 @@ jobs:
         with:
           python-version: "3.14"
 
-      - name: Enter CI working directory and prepare venv
+      - name: Prepare venv
         run: |
-          mkdir ci-env
-          cd ci-env
           pip install --upgrade pip
           python -m venv venv
 
@@ -40,14 +38,14 @@ jobs:
         run: .\venv\Scripts\activate.ps1
 
       - name: Install library (in editable mode to measure coverage)
-        run: pip install -e ../ --verbose
+        run: pip install -e ./ --verbose
 
       - name: Install test dependencies
         run: pip install scipy coverage
 
       - name: Execute tests and generate code coverage data
         run: |
-          python -m coverage run --source ../pylanczos/ -m unittest discover ../test -v
+          python -m coverage run --source ./pylanczos/ -m unittest discover ./test -v
           python -m coverage xml
 
       - name: Upload coverage data to Codecov
@@ -55,6 +53,4 @@ jobs:
         uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./test/coverage.xml
-          disable_search: true
           fail_ci_if_error: true

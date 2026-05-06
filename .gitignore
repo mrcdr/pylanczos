@@ -3,7 +3,6 @@
 build/
 /dist/
 /tmp/
-/ci-env/
 *.egg-info/
 __pycache__
 /.vscode/
