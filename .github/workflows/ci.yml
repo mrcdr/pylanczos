@@ -46,6 +46,7 @@ jobs:
       - name: Execute tests and generate code coverage data
         run: |
           python -m coverage run --source ./pylanczos/ -m unittest discover ./test -v
+          python -m coverage report
           python -m coverage xml
 
       - name: Upload coverage data to Codecov
