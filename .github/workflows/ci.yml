@@ -7,7 +7,6 @@ on:
     branches: [develop]
 
 jobs:
-  # This workflow contains a single job called "build"
   build:
     runs-on: ${{ matrix.os }}
 
@@ -25,8 +24,10 @@ jobs:
         with:
           python-version: "3.14"
 
-      - name: Prepare venv
+      - name: Enter CI working directory and prepare venv
         run: |
+          mkdir ci-env
+          cd ci-env
           pip install --upgrade pip
           python -m venv venv
 
@@ -38,17 +39,16 @@ jobs:
         if: ${{ matrix.os == 'windows-latest' }}
         run: .\venv\Scripts\activate.ps1
 
-      - name: Install library
-        run: pip install . --verbose
+      - name: Install library (in editable mode to measure coverage)
+        run: pip install -e ../ --verbose
 
       - name: Install test dependencies
         run: pip install scipy coverage
 
       - name: Execute tests and generate code coverage data
         run: |
-          cd test
-          coverage run --source ../pylanczos/ -m unittest discover ./ -v
-          coverage xml
+          python -m coverage run --source ../pylanczos/ -m unittest discover ../test -v
+          python -m coverage xml
 
       - name: Upload coverage data to Codecov
         if: ${{ matrix.os == 'ubuntu-latest' }}
