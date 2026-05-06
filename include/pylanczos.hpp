@@ -20,7 +20,7 @@ class PyLanczosCpp : public lambda_lanczos::LambdaLanczos<T> {
                bool find_maximum,
                size_t num_eigs)
       : lambda_lanczos::LambdaLanczos<T>(
-            [=](const std::vector<T>& in, std::vector<T>& out) {
+            [this, mv_mul](const std::vector<T>& in, std::vector<T>& out) {
               mv_mul(pybind11::array_t<T>(this->matrix_size, in.data(), pybind11::capsule(&in)),
                      pybind11::array_t<T>(this->matrix_size, out.data(), pybind11::capsule(&out)));
             },
@@ -72,7 +72,7 @@ class PyExponentiatorCpp : public lambda_lanczos::Exponentiator<T> {
  public:
   PyExponentiatorCpp(std::function<void(pybind11::array_t<T>, pybind11::array_t<T>)> mv_mul, size_t matrix_size)
       : lambda_lanczos::Exponentiator<T>(
-            [=](const std::vector<T>& in, std::vector<T>& out) {
+            [this, mv_mul](const std::vector<T>& in, std::vector<T>& out) {
               mv_mul(pybind11::array_t<T>(this->matrix_size, in.data(), pybind11::capsule(&in)),
                      pybind11::array_t<T>(this->matrix_size, out.data(), pybind11::capsule(&out)));
             },
