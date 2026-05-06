@@ -1,1 +1,1 @@
-from .pylanczos import PyLanczos, Exponentiator
+from .pylanczos import PyLanczos, Exponentiator, PyLanczosException

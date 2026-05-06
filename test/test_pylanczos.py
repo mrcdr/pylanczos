@@ -1,6 +1,6 @@
 import numpy as np
 import unittest
-from pylanczos import PyLanczos
+from pylanczos import PyLanczos, PyLanczosException
 from scipy.sparse import lil_matrix, csr_matrix
 
 
@@ -172,8 +172,8 @@ class PyLanczosTest(unittest.TestCase):
                            [1, 2, 1],
                            [1, 1, 2]], dtype='int64')
 
-        with self.assertRaises(Exception):
-            PyLanczos(matrix, True)
+        with self.assertRaises(PyLanczosException):
+            PyLanczos(matrix, True, 1)
 
 
 if __name__ == '__main__':
