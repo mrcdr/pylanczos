@@ -25,3 +25,6 @@ Issues = "https://github.com/mrcdr/pylanczos/issues"
 [build-system]
 requires = ["scikit-build-core", "pybind11"]
 build-backend = "scikit_build_core.build"
+
+[tool.scikit-build]
+sdist.exclude = ["test/**", "sample/**", "runner.py"]
