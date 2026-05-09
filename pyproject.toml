@@ -27,4 +27,14 @@ requires = ["scikit-build-core", "pybind11"]
 build-backend = "scikit_build_core.build"
 
 [tool.scikit-build]
-sdist.exclude = ["test/**", "sample/**", "runner.py"]
+sdist.exclude = [
+    "test/**",
+    "sample/**",
+    "runner.py",
+    "external/lambda-lanczos/**",
+]
+sdist.include = [
+    "external/lambda-lanczos/include/**",
+    "external/lambda-lanczos/LICENSE",
+    "external/lambda-lanczos/README.md",
+]
