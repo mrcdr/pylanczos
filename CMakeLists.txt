@@ -8,6 +8,7 @@ project(
 include_directories("./include")
 include_directories("./external/lambda-lanczos/include/lambda_lanczos")
 
-add_subdirectory("external/pybind11")
+set(PYBIND11_FINDPYTHON ON)
+find_package(pybind11 CONFIG REQUIRED)
 pybind11_add_module(pylanczoscpp MODULE "cpp/pylanczos.cpp" WITH_SOABI)
 install(TARGETS pylanczoscpp DESTINATION "${SKBUILD_PROJECT_NAME}")
